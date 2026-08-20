@@ -1,0 +1,65 @@
+{
+    "templates": [
+      {
+        "id": "axios-client",
+        "name": "Axios Client",
+        "type": "api-client",
+        "framework": "axios",
+        "path": "api-client/axios-client.tpl",
+        "isBuiltIn": true,
+        "description": "默认Axios API客户端模板"
+      },
+      {
+        "id": "fetch-client",
+        "name": "Fetch Client",
+        "type": "api-client",
+        "framework": "fetch",
+        "path": "api-client/fetch-client.tpl",
+        "isBuiltIn": true,
+        "description": "默认Fetch API客户端模板"
+      },
+      {
+        "id": "react-query-client",
+        "name": "React Query Client",
+        "type": "api-client",
+        "framework": "react-query",
+        "path": "api-client/react-query-client.tpl",
+        "isBuiltIn": true,
+        "description": "默认React Query API客户端模板"
+      },
+      {
+        "id": "typescript-interface",
+        "name": "TypeScript Interface",
+        "type": "typescript-types",
+        "path": "typescript-types/interface.tpl",
+        "isBuiltIn": true,
+        "description": "默认TypeScript接口模板"
+      },
+      {
+        "id": "typescript-enum",
+        "name": "TypeScript Enum",
+        "type": "typescript-types",
+        "path": "typescript-types/enum.tpl",
+        "isBuiltIn": true,
+        "description": "默认TypeScript枚举模板"
+      },
+      {
+        "id": "axios-config",
+        "name": "Axios Config",
+        "type": "config-file",
+        "framework": "axios",
+        "path": "config/axios-config.tpl",
+        "isBuiltIn": true,
+        "description": "默认Axios配置文件模板"
+      },
+      {
+        "id": "fetch-config",
+        "name": "Fetch Config",
+        "type": "config-file",
+        "framework": "fetch",
+        "path": "config/fetch-config.tpl",
+        "isBuiltIn": true,
+        "description": "默认Fetch配置文件模板"
+      }
+    ]
+  }

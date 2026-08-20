@@ -1,0 +1,5 @@
+{
+  "name": "Swagger MCP Server",
+  "version": "1.0.0",
+  "transport": "stdio"
+}
