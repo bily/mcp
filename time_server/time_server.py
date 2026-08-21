@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -6,9 +7,12 @@ from mcp.server.fastmcp import FastMCP
 # 创建 MCP 服务器实例
 mcp = FastMCP("Time Server")
 
+# 默认时区，可通过环境变量 TIME_SERVER_DEFAULT_TZ 覆盖
+DEFAULT_TZ = os.environ.get("TIME_SERVER_DEFAULT_TZ", "Asia/Shanghai")
+
 
 @mcp.tool()
-def get_current_time(timezone: str = "Asia/Shanghai") -> str:
+def get_current_time(timezone: str = DEFAULT_TZ) -> str:
     """获取指定时区的当前时间。
 
     Args:

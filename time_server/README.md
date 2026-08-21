@@ -1,13 +1,42 @@
 # Time Server MCP
 
-一个基于 [MCP (Model Context Protocol)](https://modelcontextprotocol.io) 的 Python 服务，提供获取当前时间的能力。通过 `mcp.server.fastmcp` (FastMCP) 实现，以 stdio 方式与 MCP 客户端通信。
+## 服务介绍
 
-## 功能
+这是一个基于 MCP（Model Context Protocol）协议的 Python 时间服务。服务通过官方 `mcp.server.fastmcp`（FastMCP）实现，以 stdio 方式与 MCP 客户端通信，向 AI 应用提供获取指定时区当前时间与 Unix 时间戳的能力。支持任意 IANA 时区，默认时区可通过环境变量配置。
 
-| 工具名 | 描述 | 返回示例 |
-|--------|------|----------|
-| `get_current_time` | 获取指定时区的当前时间，支持任意 IANA 时区 | `2026-08-21 15:30:00 CST (+0800)` |
-| `get_current_timestamp` | 获取当前 Unix 时间戳（秒） | `1784707800` |
+## 服务描述
+
+Time Server MCP 是一个轻量级时间查询工具服务，提供两个工具：`get_current_time` 获取指定时区的格式化当前时间（如 `2026-08-21 15:30:00 CST (+0800)`），`get_current_timestamp` 获取当前 Unix 时间戳（秒）。服务以标准 stdio 传输运行，可无缝接入 Claude Desktop、Claude Code 等支持 MCP 的客户端，适合时间查询、时区换算、跨区域协作等场景。
+
+## 类型
+
+候选分类：实用工具 / 开发者工具 / 数据服务。本服务属于时间数据查询类实用工具，最终类型由系统根据正文内容自动判定。
+
+## 服务配置
+
+```json
+{
+  "mcpServers": {
+    "time-server": {
+      "command": "python",
+      "args": [
+        "time_server.py"
+      ],
+      "env": {
+        "TIME_SERVER_DEFAULT_TZ": "Asia/Shanghai"
+      }
+    }
+  }
+}
+```
+
+## 环境变量配置
+
+服务配置中 `env` 字段定义的键值对如下：
+
+| 变量名 | 默认值 | 必填 | 说明 |
+|--------|--------|------|------|
+| `TIME_SERVER_DEFAULT_TZ` | `Asia/Shanghai` | 否 | 默认时区（IANA 名称），调用工具未指定 `timezone` 参数时使用 |
 
 ## 环境要求
 
@@ -48,34 +77,15 @@ mcp dev time_server.py
 
 该命令会启动本地调试面板，可查看工具列表、手动调用工具验证结果。
 
-## 客户端接入配置
+## 客户端接入
 
-### Claude Desktop（或其他支持 stdio MCP 的客户端）
-
-在客户端 MCP 配置文件中添加：
-
-```json
-{
-  "mcpServers": {
-    "time-server": {
-      "command": "python",
-      "args": ["time_server.py"]
-    }
-  }
-}
-```
+将「服务配置」中的 `mcpServers` 内容合并到客户端的 MCP 配置文件中（如 Claude Desktop 的 `claude_desktop_config.json`），修改后需重启客户端生效。若使用虚拟环境，请将 `command` 改为 venv 中 `python.exe` 的绝对路径。
 
 ### Claude Code CLI
 
 ```bash
 claude mcp add time-server -- python "time_server.py"
 ```
-
-### 注意事项
-
-- `command` 需为 `python` 的实际可执行路径；若使用虚拟环境，请改为 venv 中的 `python.exe` 绝对路径。
-- `args` 中的脚本路径必须是 `time_server.py` 的绝对路径，Windows 下反斜杠需转义为 `\\` 或直接使用正斜杠 `/`。
-- 修改配置后需重启客户端使配置生效。
 
 ## 使用示例
 
