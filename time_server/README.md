@@ -59,7 +59,7 @@ mcp dev time_server.py
   "mcpServers": {
     "time-server": {
       "command": "python",
-      "args": ["C:\\Users\\xinmi\\AppData\\Roaming\\Tencent\\Marvis\\User\\oAN1i2cUennVEFktXMjpR-0lU8Ak\\workspace\\conv_1a022d465c2_62f02872d750\\output\\time_server.py"]
+      "args": ["time_server.py"]
     }
   }
 }
@@ -68,7 +68,7 @@ mcp dev time_server.py
 ### Claude Code CLI
 
 ```bash
-claude mcp add time-server -- python "C:\Users\xinmi\AppData\Roaming\Tencent\Marvis\User\oAN1i2cUennVEFktXMjpR-0lU8Ak\workspace\conv_1a022d465c2_62f02872d750\output\time_server.py"
+claude mcp add time-server -- python "time_server.py"
 ```
 
 ### 注意事项
