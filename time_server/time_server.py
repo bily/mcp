@@ -36,6 +36,10 @@ def get_current_timestamp() -> int:
     return int(datetime.now().timestamp())
 
 
-if __name__ == "__main__":
+def main():
     # 默认以 stdio 方式运行，供 MCP 客户端连接
     mcp.run()
+
+
+if __name__ == "__main__":
+    main()

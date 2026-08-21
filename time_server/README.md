@@ -6,7 +6,7 @@
 
 ## 服务描述
 
-Time Server MCP 是一个轻量级时间查询工具服务，提供两个工具：`get_current_time` 获取指定时区的格式化当前时间（如 `2026-08-21 15:30:00 CST (+0800)`），`get_current_timestamp` 获取当前 Unix 时间戳（秒）。服务以标准 stdio 传输运行，可无缝接入 Claude Desktop、Claude Code 等支持 MCP 的客户端，适合时间查询、时区换算、跨区域协作等场景。
+Time Server MCP 是一个轻量级时间查询工具服务，提供两个工具：`get_current_time` 获取指定时区的格式化当前时间（如 `2026-08-21 15:30:00 CST (+0800)`），`get_current_timestamp` 获取当前 Unix 时间戳（秒）。服务以标准 stdio 传输运行，可无缝接入 Claude Desktop、Claude Code、Cherry Studio 等支持 MCP 的客户端，适合时间查询、时区换算、跨区域协作等场景。
 
 ## 类型
 
@@ -19,9 +19,25 @@ Time Server MCP 是一个轻量级时间查询工具服务，提供两个工具�
   "mcpServers": {
     "time-server": {
       "command": "python",
-      "args": [
-        "time_server.py"
-      ],
+      "args": ["time_server.py"],
+      "env": {
+        "TIME_SERVER_DEFAULT_TZ": "Asia/Shanghai"
+      }
+    }
+  }
+}
+```
+
+> 说明：`args` 中的 `time_server.py` 为仓库根目录下的相对路径；运行前需在仓库目录内执行 `pip install "mcp[cli]" "tzdata"` 安装依赖。
+
+若已发布到 PyPI（见「发布到 PyPI」章节），可使用托管部署配置：
+
+```json
+{
+  "mcpServers": {
+    "time-server": {
+      "command": "uvx",
+      "args": ["time-server-mcp"],
       "env": {
         "TIME_SERVER_DEFAULT_TZ": "Asia/Shanghai"
       }
@@ -55,8 +71,9 @@ pip install "mcp[cli]" "tzdata"
 
 ```
 time-server/
-├── time_server.py   # MCP 服务端实现
-└── README.md        # 本文档
+├── time_server.py    # MCP 服务端实现
+├── pyproject.toml    # 打包配置（发布 PyPI / 托管部署用）
+└── README.md         # 本文档
 ```
 
 ## 运行与调试
@@ -84,8 +101,20 @@ mcp dev time_server.py
 ### Claude Code CLI
 
 ```bash
-claude mcp add time-server -- python "time_server.py"
+claude mcp add time-server -- python time_server.py
 ```
+
+## 发布到 PyPI（托管部署可选）
+
+如需在 ModelScope 选择「可托管部署」，需将服务发布到 PyPI：
+
+```bash
+pip install build twine
+python -m build
+twine upload dist/*
+```
+
+发布成功后，ModelScope 客户端配置使用 `uvx time-server-mcp` 方式连接。
 
 ## 使用示例
 
