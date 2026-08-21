@@ -91,4 +91,3 @@ claude mcp add time-server -- python "C:\Users\xinmi\AppData\Roaming\Tencent\Mar
 
 - 如需远程访问，可将 `mcp.run()` 改为 `mcp.run(transport="sse")`，并通过 HTTP/SSE 连接。
 - 可增加更多时间相关工具（如日期计算、时区转换、世界时钟列表）。
-*（内容由AI生成，仅供参考）*
